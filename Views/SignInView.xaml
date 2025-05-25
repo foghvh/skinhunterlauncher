@@ -1,0 +1,29 @@
+<UserControl x:Class="SkinHunterLauncher.Views.SignInView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vm="clr-namespace:SkinHunterLauncher.ViewModels"
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance Type=vm:SignInViewModel}"
+             d:DesignHeight="450" d:DesignWidth="400" Background="Transparent">
+    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="320">
+        <TextBlock Text="Sign in" FontSize="26" FontWeight="Bold" 
+                   Foreground="{StaticResource LauncherForegroundBrush}" 
+                   HorizontalAlignment="Left" Margin="0,0,0,5"/>
+        <TextBlock Text="to continue to Skin-Hunter" FontSize="15"
+                   Foreground="{StaticResource LauncherSubtleTextBrush}" 
+                   HorizontalAlignment="Left" Margin="0,0,0,30"/>
+
+        <!-- ELIMINADO EL TEXTBOX DE LICENSE KEY -->
+        <!-- <TextBlock Text="License key" FontSize="14" Foreground="{StaticResource LauncherSubtleTextBrush}" Margin="0,0,0,8"/> -->
+        <!-- <TextBox Style="{StaticResource LauncherTextBoxStyle}" Text="{Binding LicenseKey, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,20"/> -->
+
+        <Button Content="Sign In with Discord" Style="{StaticResource LauncherDiscordButtonStyle}" 
+                Command="{Binding SignInWithDiscordCommand}" Margin="0,0,0,20"/>
+        
+        <CheckBox Content="Remember me" IsChecked="{Binding RememberMe}" 
+                  Style="{StaticResource LauncherCheckBoxStyle}" Margin="0,0,0,35"/>
+        
+    </StackPanel>
+</UserControl>
