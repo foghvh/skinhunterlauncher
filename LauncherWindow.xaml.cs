@@ -1,7 +1,9 @@
 ﻿using SkinHunterLauncher.ViewModels;
 using System.Windows;
 using System.Windows.Input;
-using System.ComponentModel; // Para PropertyChangedEventHandler
+using System.ComponentModel;
+using System.Windows.Media.Animation; // Para animaciones si se decide
+using System; // Para EventArgs
 
 namespace SkinHunterLauncher
 {
@@ -12,24 +14,19 @@ namespace SkinHunterLauncher
             InitializeComponent();
             DataContext = viewModel;
             Loaded += LauncherWindow_Loaded;
+            // SizeChanged += LauncherWindow_SizeChanged; // Considerar si el centrado solo se hace al cambiar de VM
         }
 
         private async void LauncherWindow_Loaded(object sender, RoutedEventArgs e)
         {
             if (DataContext is LauncherMainViewModel vm)
             {
-                // Llama a InitializeAsync del MainViewModel para que configure la vista inicial
                 await vm.InitializeAsync();
-
-                // Suscribirse a PropertyChanged para actualizar el tamaño de la ventana
-                // y el título de la ventana cuando CurrentViewModel cambie.
                 vm.PropertyChanged += ViewModel_PropertyChanged;
-
-                // Actualizar estado inicial basado en el CurrentViewModel que se acaba de establecer
                 if (vm.CurrentViewModel != null)
                 {
-                    UpdateWindowStateForViewModel(vm.CurrentViewModel);
-                    this.Title = vm.CurrentViewModel.Title; // Establecer el título inicial de la ventana
+                    ApplyWindowStateForViewModel(vm.CurrentViewModel, false); // Aplicar estado inicial sin animación/recentrado agresivo
+                    this.Title = vm.CurrentViewModel.Title;
                 }
             }
         }
@@ -40,33 +37,49 @@ namespace SkinHunterLauncher
             {
                 if (vm.CurrentViewModel != null)
                 {
-                    // Asegurarse de que esto se ejecuta en el hilo de la UI
                     Dispatcher.Invoke(() => {
-                        UpdateWindowStateForViewModel(vm.CurrentViewModel);
-                        this.Title = vm.CurrentViewModel.Title; // Actualizar el título de la ventana
+                        ApplyWindowStateForViewModel(vm.CurrentViewModel, true); // Aplicar con posible recentrado
+                        this.Title = vm.CurrentViewModel.Title;
                     });
                 }
             }
         }
 
-        private void UpdateWindowStateForViewModel(LauncherBaseViewModel? viewModel)
+        private void ApplyWindowStateForViewModel(LauncherBaseViewModel? viewModel, bool recenter)
         {
+            double newWidth = this.Width;
+            double newHeight = this.Height;
+            ResizeMode newResizeMode = this.ResizeMode;
+
             if (viewModel is WelcomeViewModel || viewModel is SignInViewModel || viewModel is LoadingViewModel)
             {
-                this.Width = 420;
-                this.Height = 600;
-                this.MinWidth = 380;
-                this.MinHeight = 500;
-                this.ResizeMode = ResizeMode.CanMinimize;
+                newWidth = 420;
+                newHeight = 600;
+                newResizeMode = ResizeMode.CanMinimize;
             }
             else if (viewModel is MainLauncherViewModel)
             {
-                this.Width = 800;
-                this.Height = 550;
-                this.MinWidth = 700;
-                this.MinHeight = 500;
-                this.ResizeMode = ResizeMode.CanResizeWithGrip;
+                newWidth = 800;
+                newHeight = 550;
+                newResizeMode = ResizeMode.CanResizeWithGrip;
             }
+
+            this.ResizeMode = newResizeMode; // Aplicar ResizeMode primero
+            this.Width = newWidth;
+            this.Height = newHeight;
+
+            if (recenter)
+            {
+                CenterWindowOnScreen();
+            }
+        }
+
+        private void CenterWindowOnScreen()
+        {
+            double screenWidth = SystemParameters.PrimaryScreenWidth;
+            double screenHeight = SystemParameters.PrimaryScreenHeight;
+            this.Left = (screenWidth / 2) - (this.Width / 2);
+            this.Top = (screenHeight / 2) - (this.Height / 2);
         }
 
         private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

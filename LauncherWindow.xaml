@@ -32,7 +32,7 @@
 		</ResourceDictionary>
 	</Window.Resources>
 
-	<Border Background="{StaticResource LauncherBackgroundBrush}" CornerRadius="6" BorderThickness="1" BorderBrush="{StaticResource LauncherBorderBrush}">
+	<Border Background="{StaticResource LauncherContentBackgroundBrush}" CornerRadius="6" BorderThickness="1" BorderBrush="{StaticResource LauncherInputBorderBrush}">
 		<Grid>
 			<Grid.RowDefinitions>
 				<RowDefinition Height="Auto"/>
@@ -42,7 +42,6 @@
 			<Border Grid.Row="0" Height="35" Background="Transparent" MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
 				<DockPanel LastChildFill="False">
 					<StackPanel DockPanel.Dock="Left" Orientation="Horizontal" VerticalAlignment="Center" Margin="10,0,0,0">
-						<!-- El TextBlock aquí ahora está vinculado al Title del DataContext (LauncherMainViewModel) -->
 						<TextBlock Text="{Binding Title, FallbackValue='Skin-Hunter'}" Foreground="{StaticResource LauncherSubtleTextBrush}" FontSize="13" VerticalAlignment="Center"/>
 					</StackPanel>
 
@@ -59,7 +58,7 @@
 
 			<ContentControl Grid.Row="1" Content="{Binding CurrentViewModel}" HorizontalAlignment="Stretch" VerticalContentAlignment="Stretch"/>
 
-			<Grid Grid.Row="0" Grid.RowSpan="2" Background="#88000000"
+			<Grid Grid.Row="0" Grid.RowSpan="2" Background="#CC000000"
                   Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}"
                   d:IsHidden="True">
 				<ProgressBar Style="{StaticResource LauncherLoadingSpinnerStyle}" VerticalAlignment="Center" HorizontalAlignment="Center"/>

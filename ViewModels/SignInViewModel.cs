@@ -4,17 +4,26 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using System;
 using Microsoft.Extensions.DependencyInjection;
-
+using System.Windows;
+using SkinHunterLauncher.Services;
 
 namespace SkinHunterLauncher.ViewModels
 {
     public partial class SignInViewModel : LauncherBaseViewModel
     {
         private readonly LauncherMainViewModel _mainViewModel;
+        private readonly AuthService _authService;
+        private readonly CurrentUserSessionService _sessionService; // AÑADIDO
 
-        // ELIMINADO LicenseKey
-        // [ObservableProperty]
-        // private string? _licenseKey;
+        [ObservableProperty]
+        private string? _username;
+
+        private string? _password;
+        public string? Password
+        {
+            get => _password;
+            set => SetProperty(ref _password, value);
+        }
 
         [ObservableProperty]
         private bool _rememberMe;
@@ -22,39 +31,80 @@ namespace SkinHunterLauncher.ViewModels
         public SignInViewModel(IServiceProvider serviceProvider)
         {
             _mainViewModel = serviceProvider.GetRequiredService<LauncherMainViewModel>();
+            _authService = serviceProvider.GetRequiredService<AuthService>();
+            _sessionService = serviceProvider.GetRequiredService<CurrentUserSessionService>(); // AÑADIDO
             Title = "Skin-Hunter - Sign In";
+            LoadRememberedUser();
+        }
+
+        private void LoadRememberedUser()
+        {
+            // Si el CurrentUser ya está en la sesión (cargado en App.xaml.cs), usarlo
+            if (_sessionService.IsUserLoggedIn && _sessionService.CurrentUser != null)
+            {
+                Username = _sessionService.CurrentUser.Login;
+                RememberMe = true;
+                Debug.WriteLine($"User {_sessionService.CurrentUser.Login} pre-filled from current session.");
+            }
+            else // Si no, intentar cargar desde settings (como antes)
+            {
+                var (token, rememberedUsername) = _authService.GetRememberedUser();
+                if (!string.IsNullOrEmpty(token) && !string.IsNullOrEmpty(rememberedUsername))
+                {
+                    Username = rememberedUsername;
+                    RememberMe = true;
+                    Debug.WriteLine($"Username {Username} pre-filled from remembered settings (token needs validation on login).");
+                }
+            }
         }
 
         [RelayCommand]
-        private async Task SignInWithDiscord() // NUEVO COMANDO
+        private async Task Login()
         {
-            // IsLoading = true; // El indicador global de LauncherMainViewModel debería cubrir esto
-
-            // Placeholder para la lógica de OAuth2 de Discord
-            Debug.WriteLine("Attempting to sign in with Discord...");
-
-            // Simular el proceso de autenticación
-            await Task.Delay(1500);
-
-            bool isAuthenticated = true; // Simular éxito por ahora
-
-            if (isAuthenticated)
+            if (string.IsNullOrWhiteSpace(Username) || string.IsNullOrWhiteSpace(Password))
             {
-                // Si 'Remember me' está marcado, guardarías los tokens de forma segura
+                MessageBox.Show("Please enter both username and password.", "Login Failed", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            IsLoading = true;
+
+            var (success, token, userData, errorMessage) = await _authService.LoginAsync(Username, Password);
+
+            if (success && token != null && userData != null)
+            {
+                _sessionService.SetCurrentUser(userData, token); // GUARDAR EN SESIÓN
+
+                Debug.WriteLine($"Login successful for {userData.Login}. Token: {token.Substring(0, 10)}...");
                 if (RememberMe)
                 {
-                    Debug.WriteLine("Remember me is checked. (Placeholder for saving tokens)");
+                    _authService.RememberUser(token, userData.Login!);
+                }
+                else
+                {
+                    _authService.ClearRememberedUser();
                 }
                 await _mainViewModel.NavigateTo<LoadingViewModel>();
             }
             else
             {
-                // Mostrar algún mensaje de error si la autenticación falla
-                Debug.WriteLine("Discord authentication failed. (Placeholder)");
-                // IsLoading = false; // Asegurarse de que el indicador de carga se desactive
+                MessageBox.Show(errorMessage ?? "Login failed due to an unknown error.", "Login Failed", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+            IsLoading = false;
         }
 
-        // ELIMINADOS Comandos Submit y DontHaveKey
+        [RelayCommand]
+        private void Register()
+        {
+            try
+            {
+                Process.Start(new ProcessStartInfo("https://skinhunterv2.vercel.app") { UseShellExecute = true });
+            }
+            catch (System.Exception ex)
+            {
+                Debug.WriteLine($"Error opening registration link: {ex.Message}");
+                MessageBox.Show($"Could not open registration page: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
     }
 }
