@@ -7,92 +7,91 @@
              xmlns:m="clr-namespace:SkinHunterLauncher.Models"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance Type=vm:MainLauncherViewModel}"
-             d:DesignHeight="550" d:DesignWidth="800" Background="Transparent">
-	<Grid Margin="20,15,20,20">
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="3*" MinWidth="300"/>
-			<ColumnDefinition Width="Auto"/>
-			<ColumnDefinition Width="2*" MinWidth="250"/>
-		</Grid.ColumnDefinitions>
+             Background="Transparent">
+    <Grid Margin="20,15,20,20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" MinWidth="280"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="3*" MinWidth="320"/>
+        </Grid.ColumnDefinitions>
 
-		<Grid Grid.Column="0" Margin="0,0,15,0">
-			<Grid.RowDefinitions>
-				<RowDefinition Height="Auto"/>
-				<RowDefinition Height="*"/>
-			</Grid.RowDefinitions>
+        <Grid Grid.Column="0" Margin="0,0,15,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-			<StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,20">
-				<Border Width="40" Height="40" CornerRadius="20" Background="{StaticResource LauncherButtonBackgroundBrush}" Margin="0,0,10,0">
-					<TextBlock Text="{Binding UserAvatarFallback}" FontSize="18" FontWeight="SemiBold"
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,20">
+                <Border Width="40" Height="40" CornerRadius="20" Background="{StaticResource LauncherButtonBackgroundBrush}" Margin="0,0,10,0">
+                    <TextBlock Text="{Binding UserAvatarFallback}" FontSize="26" FontWeight="Normal"
                                HorizontalAlignment="Center" VerticalAlignment="Center"
                                Foreground="{StaticResource LauncherAccentBrush}"/>
-				</Border>
-				<TextBlock Text="{Binding UserLogin}" FontSize="16" FontWeight="Medium"
+                </Border>
+                <TextBlock Text="{Binding UserLogin}" FontSize="28" FontWeight="Normal"
                            VerticalAlignment="Center" Foreground="{StaticResource LauncherForegroundBrush}"/>
-			</StackPanel>
+            </StackPanel>
 
-			<ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-				<ItemsControl ItemsSource="{Binding UpdateLogs}">
-					<ItemsControl.ItemTemplate>
-						<DataTemplate DataType="{x:Type m:UpdateLogEntry}">
-							<Border Style="{StaticResource UpdateLogSectionStyle}">
-								<StackPanel>
-									<TextBlock Text="{Binding Title}" Style="{StaticResource UpdateLogTitleStyle}"/>
-									<ItemsControl ItemsSource="{Binding Changes}">
-										<ItemsControl.ItemTemplate>
-											<DataTemplate>
-												<DockPanel LastChildFill="True">
-													<TextBlock Text="• " Foreground="{StaticResource LauncherSubtleTextBrush}" VerticalAlignment="Top"/>
-													<TextBlock Text="{Binding}" Style="{StaticResource UpdateLogItemStyle}" TextWrapping="Wrap"/>
-												</DockPanel>
-											</DataTemplate>
-										</ItemsControl.ItemTemplate>
-									</ItemsControl>
-								</StackPanel>
-							</Border>
-						</DataTemplate>
-					</ItemsControl.ItemTemplate>
-				</ItemsControl>
-			</ScrollViewer>
-		</Grid>
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Padding="0,0,5,0">
+                <ItemsControl ItemsSource="{Binding UpdateLogs}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="{x:Type m:SupabaseUpdateLogEntry}">
+                            <Border Style="{StaticResource UpdateLogSectionStyle}">
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Title}" Style="{StaticResource UpdateLogTitleStyle}"/>
+                                    <ItemsControl ItemsSource="{Binding Changes}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <DockPanel LastChildFill="True">
+                                                    <TextBlock Text="• " Foreground="{StaticResource LauncherSubtleTextBrush}" VerticalAlignment="Top" FontSize="22"/>
+                                                    <TextBlock Text="{Binding}" Style="{StaticResource UpdateLogItemStyle}" TextWrapping="Wrap"/>
+                                                </DockPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Grid>
 
-		<Separator Grid.Column="1" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="{StaticResource LauncherInputBorderBrush}" Margin="5,0"/>
+        <Separator Grid.Column="1" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Background="{StaticResource LauncherInputBorderBrush}" Margin="5,0"/>
 
+        <Border Grid.Column="2" Background="{StaticResource LauncherContentBackgroundBrush}" CornerRadius="6" Padding="20" Margin="15,0,0,0">
+            <StackPanel>
+                <Border Height="180" CornerRadius="4" Margin="0,0,0,20" Background="Transparent" ClipToBounds="True">
+                    <Image Source="pack://application:,,,/Assets/launcher_banner.png" Stretch="Uniform" RenderOptions.BitmapScalingMode="Fant"/>
+                </Border>
 
-		<Border Grid.Column="2" Background="{StaticResource LauncherContentBackgroundBrush}" CornerRadius="6" Padding="20" Margin="15,0,0,0">
-			<StackPanel>
-				<Border Height="180" CornerRadius="4" Margin="0,0,0,20" Background="#1C1C28" ClipToBounds="True">
-					<TextBlock Text="Skin-Hunter" Foreground="{StaticResource LauncherAccentBrush}" Opacity="0.6" FontSize="36" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
-				</Border>
+                <Grid Margin="0,0,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Patch" Foreground="{StaticResource LauncherSubtleTextBrush}" FontSize="24" Margin="0,0,10,0"/>
+                    <TextBlock Grid.Column="1" Text="{Binding PatchVersion}" Foreground="{StaticResource LauncherForegroundBrush}" FontSize="24" FontWeight="Normal" HorizontalAlignment="Right" ToolTip="{Binding PatchVersion}"/>
+                </Grid>
+                <Grid Margin="0,0,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Status" Foreground="{StaticResource LauncherSubtleTextBrush}" FontSize="24" Margin="0,0,10,0"/>
+                    <TextBlock Grid.Column="1" Text="{Binding VersionStatus}" Foreground="{Binding VersionStatus, Converter={StaticResource VersionStatusToColorConverter}}" FontSize="24" FontWeight="Normal" HorizontalAlignment="Right"/>
+                </Grid>
+                <Grid Margin="0,0,0,30">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="License" Foreground="{StaticResource LauncherSubtleTextBrush}" FontSize="24" Margin="0,0,10,0"/>
+                    <TextBlock Grid.Column="1" Text="{Binding LicenseType}" Foreground="{StaticResource LauncherAccentBrush}" FontSize="24" FontWeight="Normal" HorizontalAlignment="Right"/>
+                </Grid>
 
-				<Grid Margin="0,0,0,10">
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="Auto"/>
-						<ColumnDefinition Width="*"/>
-					</Grid.ColumnDefinitions>
-					<TextBlock Grid.Column="0" Text="Game Patch" Foreground="{StaticResource LauncherSubtleTextBrush}" FontSize="14" Margin="0,0,10,0"/>
-					<TextBlock Grid.Column="1" Text="{Binding PatchVersion}" Foreground="{StaticResource LauncherForegroundBrush}" FontSize="14" FontWeight="SemiBold" HorizontalAlignment="Right" ToolTip="{Binding PatchVersion}"/>
-				</Grid>
-				<Grid Margin="0,0,0,10">
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="Auto"/>
-						<ColumnDefinition Width="*"/>
-					</Grid.ColumnDefinitions>
-					<TextBlock Grid.Column="0" Text="Status" Foreground="{StaticResource LauncherSubtleTextBrush}" FontSize="14" Margin="0,0,10,0"/>
-					<TextBlock Grid.Column="1" Text="{Binding VersionStatus}" Foreground="{Binding VersionStatus, Converter={StaticResource VersionStatusToColorConverter}}" FontSize="14" FontWeight="SemiBold" HorizontalAlignment="Right"/>
-				</Grid>
-				<Grid Margin="0,0,0,30">
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="Auto"/>
-						<ColumnDefinition Width="*"/>
-					</Grid.ColumnDefinitions>
-					<TextBlock Grid.Column="0" Text="License" Foreground="{StaticResource LauncherSubtleTextBrush}" FontSize="14" Margin="0,0,10,0"/>
-					<TextBlock Grid.Column="1" Text="{Binding LicenseType}" Foreground="{StaticResource LauncherAccentBrush}" FontSize="14" FontWeight="SemiBold" HorizontalAlignment="Right"/>
-				</Grid>
-
-				<Button Content="▶ PLAY" Style="{StaticResource LauncherPrimaryButtonStyle}"
-                        Command="{Binding PlayCommand}" HorizontalAlignment="Stretch" Padding="0" Height="50" FontSize="18"/>
-			</StackPanel>
-		</Border>
-	</Grid>
+                <Button Content="▶ LAUNCH" Style="{StaticResource LauncherPrimaryButtonStyle}"
+                        Command="{Binding PlayCommand}" HorizontalAlignment="Stretch" Padding="0" Height="50" FontSize="30"/>
+            </StackPanel>
+        </Border>
+    </Grid>
 </UserControl>

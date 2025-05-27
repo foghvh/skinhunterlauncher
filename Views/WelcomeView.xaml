@@ -9,8 +9,8 @@
              d:DesignHeight="450" d:DesignWidth="400"
              Background="Transparent">
     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="300">
-        <TextBlock Text="Welcome!" FontSize="28" FontWeight="Bold" Foreground="{StaticResource LauncherForegroundBrush}" HorizontalAlignment="Center" Margin="0,0,0,10"/>
-        <TextBlock Text="Choose what you want to do" FontSize="16" Foreground="{StaticResource LauncherSubtleTextBrush}" HorizontalAlignment="Center" Margin="0,0,0,30"/>
+        <TextBlock Text="Welcome!" FontSize="46" FontWeight="Bold" Foreground="{StaticResource LauncherForegroundBrush}" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+        <TextBlock Text="Choose what you want to do" FontSize="30" Foreground="{StaticResource LauncherSubtleTextBrush}" HorizontalAlignment="Center" Margin="0,0,0,30"/>
 
         <Button Content="SIGN IN" Style="{StaticResource LauncherPrimaryButtonStyle}" 
                 Command="{Binding SignInCommand}" Margin="0,0,0,15"/>

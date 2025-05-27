@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SkinHunterLauncher")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f43a26d0c8f94a62aad7df1529c39402dfa9f47d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5165449346b2ee63d41fd820f2e41fd8f5585cd3")]
 [assembly: System.Reflection.AssemblyProductAttribute("SkinHunterLauncher")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SkinHunterLauncher")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

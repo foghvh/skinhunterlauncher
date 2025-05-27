@@ -7,6 +7,8 @@
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     <converters:VersionStatusToColorConverter x:Key="VersionStatusToColorConverter"/>
 
+    <FontFamily x:Key="DongleFontFamily">pack://application:,,,/Assets/#Dongle</FontFamily>
+
     <Color x:Key="LauncherPageBackgroundValue">#0A0A0A</Color>
     <Color x:Key="LauncherContentBackgroundValue">#10101A</Color>
     <Color x:Key="LauncherForegroundColorValue">#EAEAF5</Color>
@@ -16,6 +18,9 @@
     <Color x:Key="LauncherInputBorderColorValue">#303040</Color>
     <Color x:Key="LauncherButtonBackgroundColorValue">#2A2A3A</Color>
     <Color x:Key="LauncherButtonHoverColorValue">#3A3A4A</Color>
+    <Color x:Key="LauncherScrollbarBackgroundColorValue">#181824</Color>
+    <Color x:Key="LauncherScrollbarThumbColorValue">#303040</Color>
+    <Color x:Key="LauncherScrollbarThumbHoverColorValue">#484858</Color>
 
     <SolidColorBrush x:Key="LauncherPageBackgroundBrush" Color="{StaticResource LauncherPageBackgroundValue}"/>
     <SolidColorBrush x:Key="LauncherContentBackgroundBrush" Color="{StaticResource LauncherContentBackgroundValue}"/>
@@ -26,18 +31,61 @@
     <SolidColorBrush x:Key="LauncherInputBorderBrush" Color="{StaticResource LauncherInputBorderColorValue}"/>
     <SolidColorBrush x:Key="LauncherButtonBackgroundBrush" Color="{StaticResource LauncherButtonBackgroundColorValue}"/>
     <SolidColorBrush x:Key="LauncherButtonHoverBrush" Color="{StaticResource LauncherButtonHoverColorValue}"/>
+    <SolidColorBrush x:Key="LauncherScrollbarBackgroundBrush" Color="{StaticResource LauncherScrollbarBackgroundColorValue}"/>
+    <SolidColorBrush x:Key="LauncherScrollbarThumbBrush" Color="{StaticResource LauncherScrollbarThumbColorValue}"/>
+    <SolidColorBrush x:Key="LauncherScrollbarThumbHoverBrush" Color="{StaticResource LauncherScrollbarThumbHoverColorValue}"/>
+
+    <Style TargetType="{x:Type Control}">
+        <Setter Property="FontFamily" Value="{StaticResource DongleFontFamily}"/>
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="TextOptions.TextFormattingMode" Value="Display"/>
+        <Setter Property="TextOptions.TextHintingMode" Value="Fixed"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+    </Style>
+
+    <Style TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{StaticResource DongleFontFamily}"/>
+        <Setter Property="FontSize" Value="22"/>
+        <Setter Property="TextOptions.TextFormattingMode" Value="Display"/>
+        <Setter Property="TextOptions.TextHintingMode" Value="Fixed"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+    </Style>
+
+    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Control}}">
+        <Setter Property="FontSize" Value="24"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+    </Style>
+    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type Control}}">
+        <Setter Property="FontSize" Value="22"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+    </Style>
+    <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource {x:Type Control}}">
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+    </Style>
 
     <Style x:Key="LauncherWindowStyle" TargetType="Window">
         <Setter Property="Background" Value="{StaticResource LauncherPageBackgroundBrush}"/>
         <Setter Property="Foreground" Value="{StaticResource LauncherForegroundBrush}"/>
-        <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Setter Property="FontFamily" Value="{StaticResource DongleFontFamily}"/>
         <Setter Property="WindowStyle" Value="None"/>
         <Setter Property="AllowsTransparency" Value="True"/>
         <Setter Property="ResizeMode" Value="CanResizeWithGrip"/>
         <Setter Property="UseLayoutRounding" Value="True"/>
-        <Setter Property="TextOptions.TextFormattingMode" Value="Ideal"/>
-        <Setter Property="TextOptions.TextRenderingMode" Value="ClearType"/>
+        <Setter Property="TextOptions.TextFormattingMode" Value="Display"/>
+        <Setter Property="TextOptions.TextHintingMode" Value="Fixed"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="Icon" Value="pack://application:,,,/Assets/icon.ico"/>
+    </Style>
+
+    <Style x:Key="LauncherTitleBarTextBlockStyle" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="Foreground" Value="{StaticResource LauncherSubtleTextBrush}"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="TextOptions.TextFormattingMode" Value="Display"/>
+        <Setter Property="TextOptions.TextHintingMode" Value="Fixed"/>
     </Style>
 
     <Style x:Key="LauncherTitleBarButtonStyle" TargetType="Button">
@@ -50,6 +98,7 @@
         <Setter Property="Foreground" Value="{StaticResource LauncherSubtleTextBrush}"/>
         <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -88,18 +137,21 @@
         <Setter Property="Background" Value="{StaticResource LauncherAccentBrush}"/>
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="Padding" Value="30,12"/>
-        <Setter Property="FontSize" Value="14"/>
-        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Padding" Value="30,10,30,12"/>
+        <Setter Property="FontSize" Value="28"/>
+        <Setter Property="FontWeight" Value="Normal"/>
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="MinHeight" Value="40"/>
         <Setter Property="MinWidth" Value="120"/>
         <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="TextOptions.TextFormattingMode" Value="Display"/>
+        <Setter Property="TextOptions.TextHintingMode" Value="Fixed"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border x:Name="PART_Border" Background="{TemplateBinding Background}" CornerRadius="4">
-                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Border x:Name="PART_Border" Background="{TemplateBinding Background}" CornerRadius="4" SnapsToDevicePixels="True">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="True"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -126,16 +178,17 @@
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="{StaticResource LauncherSubtleTextBrush}"/>
         <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="Padding" Value="5,2"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Padding" Value="5,0"/>
+        <Setter Property="FontSize" Value="22"/>
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <TextBlock x:Name="PART_Text" Text="{TemplateBinding Content}" TextDecorations="None">
+                    <TextBlock x:Name="PART_Text" Text="{TemplateBinding Content}" TextDecorations="None" SnapsToDevicePixels="True">
                         <TextBlock.Style>
-                            <Style TargetType="TextBlock">
+                            <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
                                 <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Foreground}"/>
                             </Style>
                         </TextBlock.Style>
@@ -159,20 +212,23 @@
         <Setter Property="Foreground" Value="{StaticResource LauncherForegroundBrush}"/>
         <Setter Property="BorderBrush" Value="{StaticResource LauncherInputBorderBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="Padding" Value="10,8,10,8"/>
-        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Padding" Value="10,0,10,0"/>
+        <Setter Property="FontSize" Value="24"/>
         <Setter Property="MinHeight" Value="40"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="CaretBrush" Value="{StaticResource LauncherAccentBrush}"/>
         <Setter Property="SelectionBrush" Value="{StaticResource LauncherAccentBrush}"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="TextOptions.TextFormattingMode" Value="Display"/>
+        <Setter Property="TextOptions.TextHintingMode" Value="Fixed"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="TextBox">
                     <Border x:Name="border" Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="4" Padding="{TemplateBinding Padding}">
-                        <Grid>
+                            CornerRadius="4" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
+                        <Grid SnapsToDevicePixels="True">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
@@ -180,15 +236,16 @@
                             <Path Grid.Column="0" Data="{Binding Tag, RelativeSource={RelativeSource TemplatedParent}}" 
                                   Fill="{StaticResource LauncherSubtleTextBrush}" Width="16" Height="16" 
                                   VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,8,0"
-                                  Stretch="Uniform" IsHitTestVisible="False"/>
-                            <Grid Grid.Column="1">
+                                  Stretch="Uniform" IsHitTestVisible="False" SnapsToDevicePixels="True"/>
+                            <Grid Grid.Column="1" SnapsToDevicePixels="True">
                                 <ScrollViewer x:Name="PART_ContentHost" Focusable="false" 
                                               HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"
-                                              VerticalAlignment="Center"/>
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" SnapsToDevicePixels="True"/>
                                 <TextBlock Text="{Binding ToolTip, RelativeSource={RelativeSource TemplatedParent}}"
                                            Foreground="{StaticResource LauncherSubtleTextBrush}"
-                                           VerticalAlignment="Center" Padding="2,0"
-                                           Visibility="Collapsed" x:Name="PlaceholderText" IsHitTestVisible="False"/>
+                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Padding="2,0"
+                                           Visibility="Collapsed" x:Name="PlaceholderText" IsHitTestVisible="False"
+                                           FontFamily="{StaticResource DongleFontFamily}" FontSize="24" SnapsToDevicePixels="True"/>
                             </Grid>
                         </Grid>
                     </Border>
@@ -228,25 +285,29 @@
     </Style>
 
     <Style TargetType="PasswordBox">
+        <Setter Property="FontFamily" Value="{StaticResource DongleFontFamily}"/>
+        <Setter Property="FontSize" Value="24"/>
         <Setter Property="Background" Value="{StaticResource LauncherInputBackgroundBrush}"/>
         <Setter Property="Foreground" Value="{StaticResource LauncherForegroundBrush}"/>
         <Setter Property="BorderBrush" Value="{StaticResource LauncherInputBorderBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="Padding" Value="10,8,10,8"/>
-        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Padding" Value="10,0,10,0"/>
         <Setter Property="MinHeight" Value="40"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="CaretBrush" Value="{StaticResource LauncherAccentBrush}"/>
         <Setter Property="SelectionBrush" Value="{StaticResource LauncherAccentBrush}"/>
         <Setter Property="PasswordChar" Value="●"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="TextOptions.TextFormattingMode" Value="Display"/>
+        <Setter Property="TextOptions.TextHintingMode" Value="Fixed"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="PasswordBox">
                     <Border x:Name="border" Background="{TemplateBinding Background}"
                              BorderBrush="{TemplateBinding BorderBrush}"
                              BorderThickness="{TemplateBinding BorderThickness}"
-                             CornerRadius="4" Padding="{TemplateBinding Padding}">
-                        <Grid>
+                             CornerRadius="4" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
+                        <Grid SnapsToDevicePixels="True">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
@@ -254,15 +315,16 @@
                             <Path Grid.Column="0" Data="{Binding Tag, RelativeSource={RelativeSource TemplatedParent}}" 
                                   Fill="{StaticResource LauncherSubtleTextBrush}" Width="16" Height="16" 
                                   VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,8,0"
-                                  Stretch="Uniform" IsHitTestVisible="False"/>
-                            <Grid Grid.Column="1">
+                                  Stretch="Uniform" IsHitTestVisible="False" SnapsToDevicePixels="True"/>
+                            <Grid Grid.Column="1" SnapsToDevicePixels="True">
                                 <ScrollViewer Grid.Column="1" x:Name="PART_ContentHost" Focusable="false" 
                                               HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"
-                                              VerticalAlignment="Center"/>
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" SnapsToDevicePixels="True"/>
                                 <TextBlock Text="{Binding ToolTip, RelativeSource={RelativeSource TemplatedParent}}"
                                            Foreground="{StaticResource LauncherSubtleTextBrush}"
-                                           VerticalAlignment="Center" Padding="2,0"
-                                           Visibility="Collapsed" x:Name="PlaceholderText" IsHitTestVisible="False"/>
+                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Padding="2,0"
+                                           Visibility="Collapsed" x:Name="PlaceholderText" IsHitTestVisible="False"
+                                           FontFamily="{StaticResource DongleFontFamily}" FontSize="24" SnapsToDevicePixels="True"/>
                             </Grid>
                         </Grid>
                     </Border>
@@ -298,23 +360,26 @@
 
     <Style x:Key="LauncherCheckBoxStyle" TargetType="CheckBox">
         <Setter Property="Foreground" Value="{StaticResource LauncherSubtleTextBrush}"/>
-        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="FontSize" Value="30"/>
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="TextOptions.TextFormattingMode" Value="Display"/>
+        <Setter Property="TextOptions.TextHintingMode" Value="Fixed"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="CheckBox">
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal" SnapsToDevicePixels="True">
                         <Border x:Name="checkBoxBorder" Width="18" Height="18" CornerRadius="3"
                                 Background="{StaticResource LauncherInputBackgroundBrush}"
                                 BorderBrush="{StaticResource LauncherInputBorderBrush}"
-                                BorderThickness="1">
+                                BorderThickness="1" VerticalAlignment="Center" SnapsToDevicePixels="True">
                             <Path x:Name="checkMark" Width="10" Height="10" Stretch="Uniform"
                                   Fill="{StaticResource LauncherAccentBrush}"
                                   Data="M4.5,10.5 L1.5,7.5 L2.5,6.5 L4.5,8.5 L9.5,3.5 L10.5,4.5 Z"
-                                  Visibility="Collapsed" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                  Visibility="Collapsed" VerticalAlignment="Center" HorizontalAlignment="Center" SnapsToDevicePixels="True"/>
                         </Border>
-                        <ContentPresenter Margin="8,0,0,0" VerticalAlignment="Center"/>
+                        <ContentPresenter Margin="8,0,0,0" VerticalAlignment="Center" SnapsToDevicePixels="True"/>
                     </StackPanel>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True">
@@ -331,6 +396,96 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <Style x:Key="ModernScrollBarThumbStyle" TargetType="{x:Type Thumb}">
+        <Setter Property="OverridesDefaultStyle" Value="true"/>
+        <Setter Property="IsTabStop" Value="false"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Border x:Name="ThumbVisual"
+                            Background="{StaticResource LauncherScrollbarThumbBrush}"
+                            BorderBrush="Transparent"
+                            BorderThickness="0"
+                            CornerRadius="4"
+                            Width="8" Margin="-1,2"/>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="ThumbVisual" Property="Background" Value="{StaticResource LauncherScrollbarThumbHoverBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsDragging" Value="True">
+                            <Setter TargetName="ThumbVisual" Property="Background" Value="{StaticResource LauncherAccentBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ModernScrollBarPageButtonStyle" TargetType="{x:Type RepeatButton}">
+        <Setter Property="OverridesDefaultStyle" Value="true"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Focusable" Value="false"/>
+        <Setter Property="IsTabStop" Value="false"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Rectangle Fill="{TemplateBinding Background}" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type ScrollBar}">
+        <Setter Property="OverridesDefaultStyle" Value="true"/>
+        <Setter Property="Stylus.IsFlicksEnabled" Value="false"/>
+        <Setter Property="Background" Value="{StaticResource LauncherScrollbarBackgroundBrush}"/>
+        <Setter Property="Width" Value="10"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ScrollBar}">
+                    <Border Background="{TemplateBinding Background}" CornerRadius="5" Padding="1">
+                        <Track x:Name="PART_Track" IsDirectionReversed="true" IsEnabled="{TemplateBinding IsMouseOver}">
+                            <Track.DecreaseRepeatButton>
+                                <RepeatButton Style="{StaticResource ModernScrollBarPageButtonStyle}" Command="ScrollBar.PageUpCommand"/>
+                            </Track.DecreaseRepeatButton>
+                            <Track.IncreaseRepeatButton>
+                                <RepeatButton Style="{StaticResource ModernScrollBarPageButtonStyle}" Command="ScrollBar.PageDownCommand"/>
+                            </Track.IncreaseRepeatButton>
+                            <Track.Thumb>
+                                <Thumb Style="{StaticResource ModernScrollBarThumbStyle}"/>
+                            </Track.Thumb>
+                        </Track>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="Orientation" Value="Horizontal">
+                <Setter Property="Width" Value="Auto"/>
+                <Setter Property="Height" Value="10"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ScrollBar}">
+                            <Border Background="{TemplateBinding Background}" CornerRadius="5" Padding="1">
+                                <Track x:Name="PART_Track" IsDirectionReversed="false" IsEnabled="{TemplateBinding IsMouseOver}">
+                                    <Track.DecreaseRepeatButton>
+                                        <RepeatButton Style="{StaticResource ModernScrollBarPageButtonStyle}" Command="ScrollBar.PageLeftCommand"/>
+                                    </Track.DecreaseRepeatButton>
+                                    <Track.IncreaseRepeatButton>
+                                        <RepeatButton Style="{StaticResource ModernScrollBarPageButtonStyle}" Command="ScrollBar.PageRightCommand"/>
+                                    </Track.IncreaseRepeatButton>
+                                    <Track.Thumb>
+                                        <Thumb Style="{StaticResource ModernScrollBarThumbStyle}" Height="8" Width="Auto" Margin="2,-1"/>
+                                    </Track.Thumb>
+                                </Track>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <Style x:Key="LauncherLoadingSpinnerStyle" TargetType="ProgressBar" >
@@ -379,14 +534,14 @@
 
     <Style x:Key="UpdateLogTitleStyle" TargetType="TextBlock">
         <Setter Property="Foreground" Value="{StaticResource LauncherAccentBrush}"/>
-        <Setter Property="FontSize" Value="16"/>
-        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="FontSize" Value="26"/>
+        <Setter Property="FontWeight" Value="Normal"/>
         <Setter Property="Margin" Value="0,0,0,8"/>
     </Style>
 
     <Style x:Key="UpdateLogItemStyle" TargetType="TextBlock">
         <Setter Property="Foreground" Value="{StaticResource LauncherSubtleTextBrush}"/>
-        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="FontSize" Value="22"/>
         <Setter Property="Margin" Value="10,0,0,4"/>
     </Style>
 </ResourceDictionary>

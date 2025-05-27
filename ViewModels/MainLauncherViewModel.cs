@@ -12,13 +12,14 @@ using SkinHunterLauncher.Services;
 using System.Net.Http;
 using System.Text.Json;
 using System.Linq;
+using System.Collections.Generic; // Para List<SupabaseUpdateLogEntry>
 
 namespace SkinHunterLauncher.ViewModels
 {
     public partial class MainLauncherViewModel : LauncherBaseViewModel
     {
         private readonly LauncherMainViewModel _mainViewModel;
-        private readonly CurrentUserSessionService _sessionService; // CAMBIADO
+        private readonly CurrentUserSessionService _sessionService;
         private readonly SupabaseService _supabaseService;
         private readonly HttpClient _httpClient;
 
@@ -29,27 +30,24 @@ namespace SkinHunterLauncher.ViewModels
         private string? _userAvatarFallback;
 
         [ObservableProperty]
-        private string _patchVersion = "Patch: Unknown";
+        private string _patchVersion = "Unknown";
 
         [ObservableProperty]
         private string _versionStatus = "Checking...";
 
         [ObservableProperty]
-        private string _licenseType = "License: Free";
+        private string _licenseType = "N/A";
 
-
-        public ObservableCollection<UpdateLogEntry> UpdateLogs { get; } = [];
+        public ObservableCollection<SupabaseUpdateLogEntry> UpdateLogs { get; } = new();
 
         public MainLauncherViewModel(IServiceProvider serviceProvider)
         {
             _mainViewModel = serviceProvider.GetRequiredService<LauncherMainViewModel>();
-            _sessionService = serviceProvider.GetRequiredService<CurrentUserSessionService>(); // CAMBIADO
+            _sessionService = serviceProvider.GetRequiredService<CurrentUserSessionService>();
             _supabaseService = serviceProvider.GetRequiredService<SupabaseService>();
             _httpClient = new HttpClient();
 
             Title = "Skin-Hunter - Home";
-            LoadUpdateLogs();
-            LoadUserDataAndLicense(); // CAMBIADO
         }
 
         private void LoadUserDataAndLicense()
@@ -59,20 +57,40 @@ namespace SkinHunterLauncher.ViewModels
                 UserLogin = _sessionService.CurrentUser.Login;
                 if (!string.IsNullOrEmpty(UserLogin))
                 {
-                    UserAvatarFallback = UserLogin.FirstOrDefault().ToString().ToUpper();
+                    UserAvatarFallback = UserLogin.Length > 0 ? UserLogin[0].ToString().ToUpper() : "U";
                 }
-                else // Por si el login es nulo/vacío por alguna razón
+                else
                 {
                     UserLogin = "User";
                     UserAvatarFallback = "U";
                 }
-                LicenseType = _sessionService.CurrentUser.IsBuyer ? "License: Buyer" : "License: Free";
+                LicenseType = _sessionService.CurrentUser.IsBuyer ? "Buyer" : "N/A";
             }
             else
             {
                 UserLogin = "Guest";
                 UserAvatarFallback = "G";
-                LicenseType = "License: N/A";
+                LicenseType = "N/A";
+            }
+        }
+
+        private async Task FetchAndUpdateLogs()
+        {
+            var logs = await _supabaseService.GetUpdateLogsAsync();
+            UpdateLogs.Clear();
+            if (logs != null)
+            {
+                // Ordenar por alguna propiedad si es necesario, por ejemplo, una fecha o versión si la añades.
+                // Por ahora, los añade tal como vienen.
+                foreach (var logEntry in logs)
+                {
+                    UpdateLogs.Add(logEntry);
+                }
+            }
+            else
+            {
+                // Añadir un log por defecto si falla la carga
+                UpdateLogs.Add(new SupabaseUpdateLogEntry { Title = "INFO", Changes = new List<string> { "Could not load update logs." } });
             }
         }
 
@@ -101,38 +119,34 @@ namespace SkinHunterLauncher.ViewModels
                 catch (Exception ex)
                 {
                     Debug.WriteLine($"Error fetching CDRAGON version: {ex.Message}");
-                    PatchVersion = "Patch: Cdragon Error";
+                    PatchVersion = "DB Error";
                     VersionStatus = "Error";
                     return;
                 }
 
                 if (string.IsNullOrEmpty(cdragonVersionString))
                 {
-                    PatchVersion = "Patch: N/A";
+                    PatchVersion = "N/A";
                     VersionStatus = "Unknown";
                     return;
                 }
 
-                PatchVersion = $"Patch: {cdragonVersionString}";
+                PatchVersion = cdragonVersionString;
 
                 string supabasePatchVersionString = "";
                 try
                 {
-                    string bucketName = "version";
-                    string filePathInBucket = "patch.json";
-                    byte[]? fileBytes = await _supabaseService.DownloadFileBytesAsync(bucketName, filePathInBucket);
+                    byte[]? fileBytes = await _supabaseService.DownloadFileBytesAsync("version", "patch.json");
 
                     if (fileBytes == null || fileBytes.Length == 0)
                     {
-                        Debug.WriteLine($"Supabase patch.json not found or is empty in bucket '{bucketName}'.");
+                        Debug.WriteLine($"Supabase patch.json not found or is empty.");
                         VersionStatus = "Local N/A";
                         return;
                     }
                     string jsonSupabase = System.Text.Encoding.UTF8.GetString(fileBytes);
 
                     using var docSupabase = JsonDocument.Parse(jsonSupabase);
-                    // Para tu JSON: {"version": "15.10.6804378+branch.releases-15-10.content.release"}
-                    // necesitas extraer la parte X.Y
                     if (docSupabase.RootElement.TryGetProperty("version", out JsonElement supabaseVersionElement))
                     {
                         var fullSupabaseVersion = supabaseVersionElement.GetString();
@@ -168,28 +182,9 @@ namespace SkinHunterLauncher.ViewModels
             catch (Exception ex)
             {
                 Debug.WriteLine($"Error checking version: {ex.Message}");
-                PatchVersion = "Patch: Error";
+                PatchVersion = "Error";
                 VersionStatus = "Error";
             }
-        }
-
-        private void LoadUpdateLogs()
-        {
-            UpdateLogs.Add(new UpdateLogEntry
-            {
-                Title = "UPDATE",
-                Changes = ["Fixed crashes", "Update log", "Update log 1"]
-            });
-            UpdateLogs.Add(new UpdateLogEntry
-            {
-                Title = "UPDATE",
-                Changes = ["New UI", "Update log", "Update log 1"]
-            });
-            UpdateLogs.Add(new UpdateLogEntry
-            {
-                Title = "UPDATE",
-                Changes = ["Performance improvements", "Added new feature X", "Bug fixes for Y"]
-            });
         }
 
         [RelayCommand]
@@ -259,7 +254,8 @@ namespace SkinHunterLauncher.ViewModels
 
         public override async Task InitializeAsync(object? parameter = null)
         {
-            LoadUserDataAndLicense(); // Asegurarse de cargar datos de usuario aquí también por si hay navegación directa
+            LoadUserDataAndLicense();
+            await FetchAndUpdateLogs();
             await CheckVersion();
         }
     }

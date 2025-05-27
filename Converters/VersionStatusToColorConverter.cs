@@ -16,10 +16,15 @@ namespace SkinHunterLauncher.Converters
                     "UPDATED" => Brushes.LightGreen,
                     "OUTDATED" => Brushes.OrangeRed,
                     "CHECKING..." => Brushes.LightSkyBlue,
-                    _ => Brushes.LightGray,
+                    "ERROR" => Brushes.Red,
+                    "LOCAL N/A" => Brushes.Yellow,
+                    "LOCAL ERROR" => Brushes.Orange,
+                    "UNKNOWN" => Brushes.LightGray,
+                    "DB ERROR" => Brushes.MediumVioletRed,
+                    _ => Brushes.White, // Default color
                 };
             }
-            return Brushes.LightGray;
+            return Brushes.White;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

@@ -9,15 +9,17 @@ using Supabase.Gotrue;
 using BCryptNet = BCrypt.Net;
 using Postgrest.Responses;
 using System.Text.Json;
-using System.Net.Http; // AÑADIDO
-using System; // AÑADIDO
+using System.Net.Http;
+using System;
+using System.Diagnostics;
+
 
 namespace SkinHunterLauncher.Services
 {
     public class SupabaseService
     {
         private readonly Client _supabase;
-        private readonly HttpClient _httpClient; // AÑADIDO
+        private readonly HttpClient _httpClient;
 
         private const string SupabaseUrl = "https://odlqwkgewzxxmbsqutja.supabase.co";
         private const string SupabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9kbHF3a2dld3p4eG1ic3F1dGphIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzQyMTM2NzcsImV4cCI6MjA0OTc4OTY3N30.qka6a71bavDeUQgy_BKoVavaClRQa_gT36Au7oO9AF0";
@@ -30,7 +32,7 @@ namespace SkinHunterLauncher.Services
                 AutoConnectRealtime = true
             };
             _supabase = new Client(SupabaseUrl, SupabaseAnonKey, options);
-            _httpClient = new HttpClient(); // AÑADIDO
+            _httpClient = new HttpClient();
         }
 
         public async Task InitializeAsync()
@@ -143,15 +145,11 @@ namespace SkinHunterLauncher.Services
             try
             {
                 string storageUrlPart = "/storage/v1";
-                // Evitar duplicar /storage/v1 si ya está en SupabaseUrl
                 string baseUrl = SupabaseUrl.EndsWith(storageUrlPart) ? SupabaseUrl : SupabaseUrl + storageUrlPart;
-
                 string publicUrl = $"{baseUrl}/object/public/{bucketName}/{filePathInBucket}";
-
-                publicUrl = publicUrl.Replace("//object", "/object"); // Limpieza extra por si acaso
+                publicUrl = publicUrl.Replace("//object", "/object");
 
                 System.Diagnostics.Debug.WriteLine($"Attempting to download from Storage: {publicUrl}");
-
                 HttpResponseMessage response = await _httpClient.GetAsync(publicUrl);
 
                 if (!response.IsSuccessStatusCode)
@@ -170,6 +168,29 @@ namespace SkinHunterLauncher.Services
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Generic error downloading file {bucketName}/{filePathInBucket}: {ex.Message}");
+                return null;
+            }
+        }
+
+        public async Task<List<SupabaseUpdateLogEntry>?> GetUpdateLogsAsync()
+        {
+            string bucketName = "version"; // Bucket donde está updates.json
+            string filePathInBucket = "updates.json";
+            try
+            {
+                byte[]? fileBytes = await DownloadFileBytesAsync(bucketName, filePathInBucket);
+                if (fileBytes == null || fileBytes.Length == 0)
+                {
+                    Debug.WriteLine($"Supabase {filePathInBucket} not found or is empty in bucket '{bucketName}'.");
+                    return null;
+                }
+                string jsonContent = System.Text.Encoding.UTF8.GetString(fileBytes);
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                return JsonSerializer.Deserialize<List<SupabaseUpdateLogEntry>>(jsonContent, options);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error fetching/parsing Supabase {filePathInBucket}: {ex.Message}");
                 return null;
             }
         }
