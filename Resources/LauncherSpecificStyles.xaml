@@ -10,14 +10,14 @@
     <FontFamily x:Key="DongleFontFamily">pack://application:,,,/Assets/#Dongle</FontFamily>
 
     <Color x:Key="LauncherPageBackgroundValue">#0A0A0A</Color>
-    <Color x:Key="LauncherContentBackgroundValue">#10101A</Color>
-    <Color x:Key="LauncherForegroundColorValue">#EAEAF5</Color>
-    <Color x:Key="LauncherAccentColorValue">#6C63FF</Color>
-    <Color x:Key="LauncherSubtleTextColorValue">#A0A0B0</Color>
-    <Color x:Key="LauncherInputBackgroundColorValue">#1A1A1A</Color>
-    <Color x:Key="LauncherInputBorderColorValue">#303040</Color>
+    <Color x:Key="LauncherContentBackgroundValue">#14141C</Color>
+    <Color x:Key="LauncherForegroundColorValue">#E0E1E9</Color>
+    <Color x:Key="LauncherAccentColorValue">#7F67FF</Color>
+    <Color x:Key="LauncherSubtleTextColorValue">#9494A4</Color>
+    <Color x:Key="LauncherInputBackgroundColorValue">#0D0D13</Color>
+    <Color x:Key="LauncherInputBorderColorValue">#2D2D3B</Color>
     <Color x:Key="LauncherButtonBackgroundColorValue">#2A2A3A</Color>
-    <Color x:Key="LauncherButtonHoverColorValue">#3A3A4A</Color>
+    <Color x:Key="LauncherButtonHoverColorValue">#3E3E50</Color>
     <Color x:Key="LauncherScrollbarBackgroundColorValue">#181824</Color>
     <Color x:Key="LauncherScrollbarThumbColorValue">#303040</Color>
     <Color x:Key="LauncherScrollbarThumbHoverColorValue">#484858</Color>
@@ -37,7 +37,7 @@
 
     <Style TargetType="{x:Type Control}">
         <Setter Property="FontFamily" Value="{StaticResource DongleFontFamily}"/>
-        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="FontSize" Value="28"/>
         <Setter Property="TextOptions.TextFormattingMode" Value="Display"/>
         <Setter Property="TextOptions.TextHintingMode" Value="Fixed"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
@@ -45,27 +45,27 @@
 
     <Style TargetType="{x:Type TextBlock}">
         <Setter Property="FontFamily" Value="{StaticResource DongleFontFamily}"/>
-        <Setter Property="FontSize" Value="22"/>
+        <Setter Property="FontSize" Value="30"/>
         <Setter Property="TextOptions.TextFormattingMode" Value="Display"/>
         <Setter Property="TextOptions.TextHintingMode" Value="Fixed"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
     </Style>
 
     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Control}}">
-        <Setter Property="FontSize" Value="24"/>
+        <Setter Property="FontSize" Value="30"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
     </Style>
     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type Control}}">
-        <Setter Property="FontSize" Value="22"/>
+        <Setter Property="FontSize" Value="28"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
     </Style>
     <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource {x:Type Control}}">
-        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="FontSize" Value="26"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
     </Style>
 
     <Style x:Key="LauncherWindowStyle" TargetType="Window">
-        <Setter Property="Background" Value="{StaticResource LauncherPageBackgroundBrush}"/>
+        <Setter Property="Background" Value="{StaticResource LauncherContentBackgroundBrush}"/>
         <Setter Property="Foreground" Value="{StaticResource LauncherForegroundBrush}"/>
         <Setter Property="FontFamily" Value="{StaticResource DongleFontFamily}"/>
         <Setter Property="WindowStyle" Value="None"/>
@@ -79,9 +79,9 @@
     </Style>
 
     <Style x:Key="LauncherTitleBarTextBlockStyle" TargetType="TextBlock">
-        <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Setter Property="FontFamily" Value="Segoe UI Semibold"/>
         <Setter Property="FontSize" Value="13"/>
-        <Setter Property="Foreground" Value="{StaticResource LauncherSubtleTextBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource LauncherForegroundBrush}"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="TextOptions.TextFormattingMode" Value="Display"/>
@@ -91,11 +91,11 @@
     <Style x:Key="LauncherTitleBarButtonStyle" TargetType="Button">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="Width" Value="40"/>
+        <Setter Property="Width" Value="38"/>
         <Setter Property="Height" Value="30"/>
         <Setter Property="Padding" Value="0"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="Foreground" Value="{StaticResource LauncherSubtleTextBrush}"/>
+        <Setter Property="Foreground" Value="#A0A0B8"/>
         <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
@@ -137,12 +137,12 @@
         <Setter Property="Background" Value="{StaticResource LauncherAccentBrush}"/>
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="Padding" Value="30,10,30,12"/>
+        <Setter Property="Padding" Value="25,6,25,8"/>
         <Setter Property="FontSize" Value="28"/>
         <Setter Property="FontWeight" Value="Normal"/>
         <Setter Property="Cursor" Value="Hand"/>
-        <Setter Property="MinHeight" Value="40"/>
-        <Setter Property="MinWidth" Value="120"/>
+        <Setter Property="MinHeight" Value="38"/>
+        <Setter Property="MinWidth" Value="100"/>
         <Setter Property="HorizontalAlignment" Value="Stretch"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="TextOptions.TextFormattingMode" Value="Display"/>
@@ -150,7 +150,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border x:Name="PART_Border" Background="{TemplateBinding Background}" CornerRadius="4" SnapsToDevicePixels="True">
+                    <Border x:Name="PART_Border" Background="{TemplateBinding Background}" CornerRadius="3" SnapsToDevicePixels="True">
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="True"/>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -170,8 +170,37 @@
     </Style>
 
     <Style x:Key="LauncherSecondaryButtonStyle" TargetType="Button" BasedOn="{StaticResource LauncherPrimaryButtonStyle}">
-        <Setter Property="Background" Value="{StaticResource LauncherButtonBackgroundBrush}"/>
-        <Setter Property="Foreground" Value="{StaticResource LauncherForegroundBrush}"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource LauncherSubtleTextBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource LauncherInputBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="MinWidth" Value="80"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="PART_Border" Background="{TemplateBinding Background}" 
+                            BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="3" SnapsToDevicePixels="True">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="True"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="PART_Border" Property="BorderBrush" Value="{StaticResource LauncherAccentBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource LauncherAccentBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="PART_Border" Property="Background" Value="{StaticResource LauncherAccentBrush}"/>
+                            <Setter TargetName="PART_Border" Property="BorderBrush" Value="{StaticResource LauncherAccentBrush}"/>
+                            <Setter Property="Foreground" Value="White"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="PART_Border" Property="Opacity" Value="0.6"/>
+                            <Setter Property="Foreground" Value="{StaticResource LauncherSubtleTextBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <Style x:Key="LauncherLinkButtonStyle" TargetType="Button">
@@ -179,7 +208,7 @@
         <Setter Property="Foreground" Value="{StaticResource LauncherSubtleTextBrush}"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Padding" Value="5,0"/>
-        <Setter Property="FontSize" Value="22"/>
+        <Setter Property="FontSize" Value="20"/>
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
@@ -213,8 +242,8 @@
         <Setter Property="BorderBrush" Value="{StaticResource LauncherInputBorderBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Padding" Value="10,0,10,0"/>
-        <Setter Property="FontSize" Value="24"/>
-        <Setter Property="MinHeight" Value="40"/>
+        <Setter Property="FontSize" Value="28"/>
+        <Setter Property="MinHeight" Value="38"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="CaretBrush" Value="{StaticResource LauncherAccentBrush}"/>
         <Setter Property="SelectionBrush" Value="{StaticResource LauncherAccentBrush}"/>
@@ -227,15 +256,15 @@
                     <Border x:Name="border" Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="4" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
+                            CornerRadius="3" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
                         <Grid SnapsToDevicePixels="True">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Path Grid.Column="0" Data="{Binding Tag, RelativeSource={RelativeSource TemplatedParent}}" 
-                                  Fill="{StaticResource LauncherSubtleTextBrush}" Width="16" Height="16" 
-                                  VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,8,0"
+                                  Fill="{StaticResource LauncherSubtleTextBrush}" Width="14" Height="14" 
+                                  VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,10,0"
                                   Stretch="Uniform" IsHitTestVisible="False" SnapsToDevicePixels="True"/>
                             <Grid Grid.Column="1" SnapsToDevicePixels="True">
                                 <ScrollViewer x:Name="PART_ContentHost" Focusable="false" 
@@ -243,9 +272,9 @@
                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}" SnapsToDevicePixels="True"/>
                                 <TextBlock Text="{Binding ToolTip, RelativeSource={RelativeSource TemplatedParent}}"
                                            Foreground="{StaticResource LauncherSubtleTextBrush}"
-                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Padding="2,0"
+                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Padding="2,0,2,1"
                                            Visibility="Collapsed" x:Name="PlaceholderText" IsHitTestVisible="False"
-                                           FontFamily="{StaticResource DongleFontFamily}" FontSize="24" SnapsToDevicePixels="True"/>
+                                           FontFamily="{StaticResource DongleFontFamily}" FontSize="{TemplateBinding FontSize}" SnapsToDevicePixels="True"/>
                             </Grid>
                         </Grid>
                     </Border>
@@ -258,26 +287,10 @@
                             <Setter Property="Visibility" TargetName="PlaceholderText" Value="Visible"/>
                         </MultiTrigger>
                         <Trigger Property="IsKeyboardFocused" Value="True">
-                            <Setter Property="BorderBrush" Value="{StaticResource LauncherAccentBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource LauncherAccentBrush}"/>
+                            <Setter TargetName="border" Property="BorderThickness" Value="1.5"/>
                             <Setter Property="Visibility" TargetName="PlaceholderText" Value="Collapsed"/>
                         </Trigger>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Opacity" Value="0.6"/>
-                        </Trigger>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="Text" Value=""/>
-                                <Condition Property="IsKeyboardFocused" Value="False"/>
-                            </MultiTrigger.Conditions>
-                            <Setter Property="Visibility" TargetName="PlaceholderText" Value="Visible"/>
-                        </MultiTrigger>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="Text" Value="{x:Null}"/>
-                                <Condition Property="IsKeyboardFocused" Value="False"/>
-                            </MultiTrigger.Conditions>
-                            <Setter Property="Visibility" TargetName="PlaceholderText" Value="Visible"/>
-                        </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -286,13 +299,13 @@
 
     <Style TargetType="PasswordBox">
         <Setter Property="FontFamily" Value="{StaticResource DongleFontFamily}"/>
-        <Setter Property="FontSize" Value="24"/>
+        <Setter Property="FontSize" Value="30"/>
         <Setter Property="Background" Value="{StaticResource LauncherInputBackgroundBrush}"/>
         <Setter Property="Foreground" Value="{StaticResource LauncherForegroundBrush}"/>
         <Setter Property="BorderBrush" Value="{StaticResource LauncherInputBorderBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Padding" Value="10,0,10,0"/>
-        <Setter Property="MinHeight" Value="40"/>
+        <Setter Property="MinHeight" Value="38"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="CaretBrush" Value="{StaticResource LauncherAccentBrush}"/>
         <Setter Property="SelectionBrush" Value="{StaticResource LauncherAccentBrush}"/>
@@ -306,15 +319,15 @@
                     <Border x:Name="border" Background="{TemplateBinding Background}"
                              BorderBrush="{TemplateBinding BorderBrush}"
                              BorderThickness="{TemplateBinding BorderThickness}"
-                             CornerRadius="4" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
+                             CornerRadius="3" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
                         <Grid SnapsToDevicePixels="True">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Path Grid.Column="0" Data="{Binding Tag, RelativeSource={RelativeSource TemplatedParent}}" 
-                                  Fill="{StaticResource LauncherSubtleTextBrush}" Width="16" Height="16" 
-                                  VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,8,0"
+                                  Fill="{StaticResource LauncherSubtleTextBrush}" Width="14" Height="14" 
+                                  VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,10,0"
                                   Stretch="Uniform" IsHitTestVisible="False" SnapsToDevicePixels="True"/>
                             <Grid Grid.Column="1" SnapsToDevicePixels="True">
                                 <ScrollViewer Grid.Column="1" x:Name="PART_ContentHost" Focusable="false" 
@@ -322,35 +335,30 @@
                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}" SnapsToDevicePixels="True"/>
                                 <TextBlock Text="{Binding ToolTip, RelativeSource={RelativeSource TemplatedParent}}"
                                            Foreground="{StaticResource LauncherSubtleTextBrush}"
-                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Padding="2,0"
-                                           Visibility="Collapsed" x:Name="PlaceholderText" IsHitTestVisible="False"
-                                           FontFamily="{StaticResource DongleFontFamily}" FontSize="24" SnapsToDevicePixels="True"/>
+                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Padding="2,0,2,1"
+                                           Visibility="Visible" x:Name="PlaceholderText" IsHitTestVisible="False"
+                                           FontFamily="{StaticResource DongleFontFamily}" FontSize="{TemplateBinding FontSize}" SnapsToDevicePixels="True"/>
                             </Grid>
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <DataTrigger Binding="{Binding Path=Password, RelativeSource={RelativeSource Self}, Converter={StaticResource StringIsNullOrEmptyConverter}}" Value="True">
-                            <Setter Property="Visibility" TargetName="PlaceholderText" Value="Visible"/>
-                        </DataTrigger>
                         <Trigger Property="IsKeyboardFocused" Value="True">
                             <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource LauncherAccentBrush}"/>
+                            <Setter TargetName="border" Property="BorderThickness" Value="1.5"/>
                             <Setter Property="Visibility" TargetName="PlaceholderText" Value="Collapsed"/>
                         </Trigger>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Opacity" Value="0.6"/>
-                        </Trigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Path=Password, RelativeSource={RelativeSource Self}, Converter={StaticResource StringIsNullOrEmptyConverter}}" Value="False"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Visibility" TargetName="PlaceholderText" Value="Collapsed"/>
+                        </MultiDataTrigger>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding Path=Password, RelativeSource={RelativeSource Self}, Converter={StaticResource StringIsNullOrEmptyConverter}}" Value="True"/>
                                 <Condition Binding="{Binding Path=IsKeyboardFocused, RelativeSource={RelativeSource Self}}" Value="False"/>
                             </MultiDataTrigger.Conditions>
                             <Setter Property="Visibility" TargetName="PlaceholderText" Value="Visible"/>
-                        </MultiDataTrigger>
-                        <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding Path=Password, RelativeSource={RelativeSource Self}, Converter={StaticResource StringIsNullOrEmptyConverter}}" Value="False"/>
-                            </MultiDataTrigger.Conditions>
-                            <Setter Property="Visibility" TargetName="PlaceholderText" Value="Collapsed"/>
                         </MultiDataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -360,7 +368,7 @@
 
     <Style x:Key="LauncherCheckBoxStyle" TargetType="CheckBox">
         <Setter Property="Foreground" Value="{StaticResource LauncherSubtleTextBrush}"/>
-        <Setter Property="FontSize" Value="30"/>
+        <Setter Property="FontSize" Value="24"/>
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
@@ -370,16 +378,16 @@
             <Setter.Value>
                 <ControlTemplate TargetType="CheckBox">
                     <StackPanel Orientation="Horizontal" SnapsToDevicePixels="True">
-                        <Border x:Name="checkBoxBorder" Width="18" Height="18" CornerRadius="3"
+                        <Border x:Name="checkBoxBorder" Width="15" Height="15" CornerRadius="3"
                                 Background="{StaticResource LauncherInputBackgroundBrush}"
                                 BorderBrush="{StaticResource LauncherInputBorderBrush}"
-                                BorderThickness="1" VerticalAlignment="Center" SnapsToDevicePixels="True">
-                            <Path x:Name="checkMark" Width="10" Height="10" Stretch="Uniform"
+                                BorderThickness="1" VerticalAlignment="Center" SnapsToDevicePixels="True" Margin="0,2,0,0">
+                            <Path x:Name="checkMark" Width="8" Height="8" Stretch="Uniform"
                                   Fill="{StaticResource LauncherAccentBrush}"
                                   Data="M4.5,10.5 L1.5,7.5 L2.5,6.5 L4.5,8.5 L9.5,3.5 L10.5,4.5 Z"
                                   Visibility="Collapsed" VerticalAlignment="Center" HorizontalAlignment="Center" SnapsToDevicePixels="True"/>
                         </Border>
-                        <ContentPresenter Margin="8,0,0,0" VerticalAlignment="Center" SnapsToDevicePixels="True"/>
+                        <ContentPresenter Margin="8,-2,0,0" VerticalAlignment="Center" SnapsToDevicePixels="True"/>
                     </StackPanel>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True">
@@ -388,9 +396,6 @@
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="checkBoxBorder" Property="BorderBrush" Value="{StaticResource LauncherAccentBrush}"/>
-                        </Trigger>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Opacity" Value="0.6"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -490,8 +495,8 @@
 
     <Style x:Key="LauncherLoadingSpinnerStyle" TargetType="ProgressBar" >
         <Setter Property="IsIndeterminate" Value="True"/>
-        <Setter Property="Width" Value="50"/>
-        <Setter Property="Height" Value="50"/>
+        <Setter Property="Width" Value="34"/>
+        <Setter Property="Height" Value="34"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="BorderThickness" Value="0"/>
@@ -501,11 +506,11 @@
             <Setter.Value>
                 <ControlTemplate TargetType="ProgressBar" >
                     <Grid RenderTransformOrigin="0.5,0.5">
-                        <Ellipse Stroke="{StaticResource LauncherInputBorderBrush}" StrokeThickness="3" Opacity="0.4"/>
-                        <Path Name="PART_Indicator" Stroke="{TemplateBinding Foreground}" StrokeThickness="3" StrokeStartLineCap="Round" StrokeEndLineCap="Round"
-                                Data="M25,3 A22,22 0 0 1 47,25">
+                        <Ellipse Stroke="{StaticResource LauncherAccentBrush}" StrokeThickness="3" Opacity="0.25"/>
+                        <Path Name="PART_Indicator" Stroke="{TemplateBinding Foreground}" StrokeThickness="3.5" StrokeStartLineCap="Round" StrokeEndLineCap="Round"
+                                Data="M17,2 A15,15 0 0 1 32,17">
                             <Path.RenderTransform>
-                                <RotateTransform Angle="0" CenterX="25" CenterY="25" />
+                                <RotateTransform Angle="0" CenterX="17" CenterY="17" />
                             </Path.RenderTransform>
                         </Path>
                         <Grid.Triggers>
@@ -534,14 +539,14 @@
 
     <Style x:Key="UpdateLogTitleStyle" TargetType="TextBlock">
         <Setter Property="Foreground" Value="{StaticResource LauncherAccentBrush}"/>
-        <Setter Property="FontSize" Value="26"/>
+        <Setter Property="FontSize" Value="32"/>
         <Setter Property="FontWeight" Value="Normal"/>
         <Setter Property="Margin" Value="0,0,0,8"/>
     </Style>
 
     <Style x:Key="UpdateLogItemStyle" TargetType="TextBlock">
         <Setter Property="Foreground" Value="{StaticResource LauncherSubtleTextBrush}"/>
-        <Setter Property="FontSize" Value="22"/>
-        <Setter Property="Margin" Value="10,0,0,4"/>
+        <Setter Property="FontSize" Value="28"/>
+        <Setter Property="Margin" Value="15,0,0,4"/>
     </Style>
 </ResourceDictionary>

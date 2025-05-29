@@ -2,8 +2,7 @@
 using System.Windows;
 using System.Windows.Input;
 using System.ComponentModel;
-using System.Windows.Media.Animation; // Para animaciones si se decide
-using System; // Para EventArgs
+using System;
 
 namespace SkinHunterLauncher
 {
@@ -14,7 +13,6 @@ namespace SkinHunterLauncher
             InitializeComponent();
             DataContext = viewModel;
             Loaded += LauncherWindow_Loaded;
-            // SizeChanged += LauncherWindow_SizeChanged; // Considerar si el centrado solo se hace al cambiar de VM
         }
 
         private async void LauncherWindow_Loaded(object sender, RoutedEventArgs e)
@@ -23,9 +21,15 @@ namespace SkinHunterLauncher
             {
                 await vm.InitializeAsync();
                 vm.PropertyChanged += ViewModel_PropertyChanged;
+
+                if (this.WindowStartupLocation == WindowStartupLocation.Manual)
+                {
+                    CenterWindowOnScreen();
+                }
+
                 if (vm.CurrentViewModel != null)
                 {
-                    ApplyWindowStateForViewModel(vm.CurrentViewModel, false); // Aplicar estado inicial sin animación/recentrado agresivo
+                    ApplyWindowStateForViewModel(vm.CurrentViewModel, true);
                     this.Title = vm.CurrentViewModel.Title;
                 }
             }
@@ -38,7 +42,7 @@ namespace SkinHunterLauncher
                 if (vm.CurrentViewModel != null)
                 {
                     Dispatcher.Invoke(() => {
-                        ApplyWindowStateForViewModel(vm.CurrentViewModel, true); // Aplicar con posible recentrado
+                        ApplyWindowStateForViewModel(vm.CurrentViewModel, true);
                         this.Title = vm.CurrentViewModel.Title;
                     });
                 }
@@ -47,39 +51,53 @@ namespace SkinHunterLauncher
 
         private void ApplyWindowStateForViewModel(LauncherBaseViewModel? viewModel, bool recenter)
         {
-            double newWidth = this.Width;
-            double newHeight = this.Height;
+            double currentLeft = this.Left;
+            double currentTop = this.Top;
+            double currentWidth = this.Width;
+            double currentHeight = this.Height;
+
+            double newWidth = currentWidth;
+            double newHeight = currentHeight;
             ResizeMode newResizeMode = this.ResizeMode;
 
             if (viewModel is WelcomeViewModel || viewModel is SignInViewModel || viewModel is LoadingViewModel)
             {
-                newWidth = 420;
-                newHeight = 600;
-                newResizeMode = ResizeMode.CanMinimize;
+                newWidth = 400;
+                newHeight = 330;
+                this.MinHeight = 330;
+                this.MinWidth = 400;
+                newResizeMode = ResizeMode.NoResize;
             }
             else if (viewModel is MainLauncherViewModel)
             {
-                newWidth = 800;
-                newHeight = 550;
+                newWidth = 860;
+                newHeight = 520;
+                this.MinHeight = 500;
+                this.MinWidth = 700;
                 newResizeMode = ResizeMode.CanResizeWithGrip;
             }
 
-            this.ResizeMode = newResizeMode; // Aplicar ResizeMode primero
+            bool sizeChanged = (this.Width != newWidth || this.Height != newHeight);
+
+            this.ResizeMode = newResizeMode;
             this.Width = newWidth;
             this.Height = newHeight;
 
-            if (recenter)
+            if (recenter || sizeChanged)
             {
-                CenterWindowOnScreen();
+                if (WindowStartupLocation == WindowStartupLocation.Manual || Left == 0 && Top == 0 || recenter && sizeChanged)
+                {
+                    CenterWindowOnScreen();
+                }
             }
         }
 
         private void CenterWindowOnScreen()
         {
-            double screenWidth = SystemParameters.PrimaryScreenWidth;
-            double screenHeight = SystemParameters.PrimaryScreenHeight;
-            this.Left = (screenWidth / 2) - (this.Width / 2);
-            this.Top = (screenHeight / 2) - (this.Height / 2);
+            double screenWidth = SystemParameters.WorkArea.Width; // Usar WorkArea para evitar la barra de tareas
+            double screenHeight = SystemParameters.WorkArea.Height;
+            this.Left = (screenWidth - this.Width) / 2;
+            this.Top = (screenHeight - this.Height) / 2;
         }
 
         private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
